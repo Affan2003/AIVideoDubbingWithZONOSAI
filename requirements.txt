@@ -1,0 +1,11 @@
+streamlit==1.43.2
+torch==2.6.0
+openai-whisper
+numpy==2.0.2
+gTTS
+ffmpeg-python
+pandas
+opencv-python-headless
+moviepy
+gradio
+requests  # For Zonos AI API calls
