@@ -121,8 +121,8 @@ if uploaded_file is not None:
                 st.error("❌ Failed to generate one or both output videos. Check the error logs below:")
                 st.code(process_gtts.stderr.decode())
                 st.code(process_zonos.stderr.decode())
-        else:
-            st.error("❌ Zonos audio generation failed. Skipping Zonos output.")
+    else:
+        st.error("❌ Zonos audio generation failed. Skipping Zonos output.")
 
     # Clean up temporary files
     os.remove(temp_video_path)
