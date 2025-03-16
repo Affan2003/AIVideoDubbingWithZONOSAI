@@ -8,4 +8,4 @@ pandas
 opencv-python-headless
 moviepy
 gradio
-requests  # For Zonos AI API calls
+requests
