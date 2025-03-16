@@ -15,14 +15,14 @@ for lib in required_libraries:
 
 # Streamlit UI
 st.set_page_config(page_title="AI Video English Dubbing Studio", page_icon="🎥", layout="centered")
-st.title("🎬 AI Video English Dubbing Studio")
+st.title("🎬 AI Video English Dubbing Studio using gtts and Zonos AI")
 st.markdown("**Transform non-English videos into English-dubbed content with ease!**")
 
 # Upload video file
 uploaded_file = st.file_uploader("📤 Upload a video file (Supported formats: MP4, MOV, AVI)", type=["mp4", "mov", "avi"])
 
 if uploaded_file is not None:
-    st.write("📽️ Processing the video, please wait...")
+    st.write("📽️ Processing the video...")
 
     # Save the uploaded video temporarily
     with open("temp_video.mp4", "wb") as f:
@@ -31,11 +31,11 @@ if uploaded_file is not None:
 
     # Step 1: Extract audio using FFmpeg
     audio_file_path = "temp_audio.wav"
-    st.write("🔊 Extracting audio from the video...")
+    st.write("🔊 Extracting audio from it...")
     subprocess.run(["ffmpeg", "-i", temp_video_path, "-q:a", "0", "-map", "a", audio_file_path])
 
     # Step 2: Transcribe audio using Whisper
-    st.write("📝 Transcribing audio using Whisper...")
+    st.write("📝 Transcribing it using Whisper...")
     model = whisper.load_model("tiny")
     result = model.transcribe(audio_file_path, task="translate")
     transcription = result["text"]
@@ -47,7 +47,7 @@ if uploaded_file is not None:
     tts.save(english_audio_gtts_path)
 
     # Step 4: Generate English audio using Zonos
-    st.write("🎤 Generating English audio using Zonos...")
+    st.write("🎤 Generating English audio using Zonos AI...")
     zonos_api_key = "zsk-38eff65061c1219a17da4d60c27448d29fe705e8a65f432c6f7edf46c0cba0d7"  # Your Zonos API key
     zonos_url = "http://api.zyphra.com/v1/audio/text-to-speech"  # Correct Zonos API endpoint
 
@@ -73,7 +73,6 @@ if uploaded_file is not None:
         english_audio_zonos_path = "english_audio_zonos.mp3"
         with open(english_audio_zonos_path, "wb") as f:
             f.write(zonos_response.content)
-        st.success("✅ Zonos audio generated successfully!")
     else:
         st.error(f"❌ Failed to generate Zonos audio. Error: {zonos_response.status_code} - {zonos_response.text}")
         english_audio_zonos_path = None
@@ -114,7 +113,7 @@ if uploaded_file is not None:
 
         # Check if both outputs were created successfully
         if process_gtts.returncode == 0 and process_zonos.returncode == 0:
-            st.success("✅ Processing completed. Compare the outputs below:")
+            st.success("✅ Processing completed.")
 
             # Display gTTS output
             st.write("### gTTS Output")
